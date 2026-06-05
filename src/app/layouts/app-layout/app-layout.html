@@ -1,5 +1,5 @@
 <main class="flex justify-center">
-    <div class="lg:mt-30 mt-10 p-5 flex flex-col justify-center w-340">
+    <div class="lg:pt-20 pt-10 lg:p-5 p-0 flex flex-col justify-center w-7xl min-h-[100vh]">
         <header class="flex flex-col lg:flex-row justify-center lg:justify-between w-full items-center">
             <div>
                 <h1 class="text-[4vh] lg:text-[7vh]">Numerical Methods</h1>
@@ -24,8 +24,11 @@
                 }
             </nav>
         </header>
-        <div class="mt-14 p-10">
+        <div class="mt-14 lg:p-10 flex-1">
             <router-outlet />
         </div>
+        <footer class="text-center p-10 opacity-50">
+            &copy; 2026
+        </footer>
     </div>
 </main>

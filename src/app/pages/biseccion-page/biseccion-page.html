@@ -19,7 +19,7 @@
                     type="text" 
                     name="func" 
                     [(ngModel)]="formValues.func"
-                    placeholder="x**3 - 2x + 5" 
+                    placeholder="x^3 - 2x + 5" 
                     class="mt-2 border-gray-500 border px-2 rounded-md">
             </div>
 
@@ -81,15 +81,15 @@
         <!--RIGHT PANEL-->
         <div class="p-5 md:w-175 w-80 h-130 overflow-x-scroll border border-gray-500 mt-10 lg:mt-0">
             <!--TOP PROGRESS BUTTONS-->
-            <section class="flex gap-2">
-                <button class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
+            <section class="sticky top-1 z-50 flex gap-2">
+                <button (click)="anterior()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M9 14l-4 -4l4 -4" />
                         <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
                     </svg>
                 </button>
-                <button class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
+                <button (click)="siguiente()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M15 14l4 -4l-4 -4" />
@@ -98,15 +98,93 @@
                 </button>
             </section>
 
-            <section class="flex justify-center h-full">
+            <section class="h-full">
+
                 @if(isWaiting){
+
                     <div class="pt-25 flex items-center flex-col opacity-50">
                         <p>Waiting for data...</p>
                         <div class="mt-10">
                             <app-loadindicator></app-loadindicator>
-                            
                         </div>
                     </div>
+
+                } @else {
+
+                    @if(resultado){
+
+                        <div class="w-full overflow-auto mt-10">
+
+                            <table class="w-full border-collapse border border-gray-500">
+                                <thead>
+                                    <tr class="bg-orange-500/70">
+                                        <th class="border border-gray-500 p-2">Iteración</th>
+                                        <th class="border border-gray-500 p-2">a</th>
+                                        <th class="border border-gray-500 p-2">b</th>
+                                        <th class="border border-gray-500 p-2">Xm</th>
+                                        <th class="border border-gray-500 p-2">f(a)</th>
+                                        <th class="border border-gray-500 p-2">f(b)</th>
+                                        <th class="border border-gray-500 p-2">f(Xm)</th>
+                                        <th class="border border-gray-500 p-2">Error</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @for(it of resultado.iteraciones; track it.iteracion){
+
+                                        <tr>
+                                            <td class="border border-gray-500 p-2 text-center">
+                                                {{ it.iteracion }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.a }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.b }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.xm }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.fa }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.fb }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.fxm }}
+                                            </td>
+
+                                            <td class="border border-gray-500 p-2">
+                                                {{ it.error }}
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <section class="mt-5">
+                            <div id="graficaBiseccion" class="w-full h-112.5"></div>
+                        </section>
+
+                        <p class="pt-5 pb-5">
+                            Iteración <span class="text-orange-600">{{ iteracionActual + 1 }}</span>
+                            de
+                            {{ resultado.iteraciones.length }}
+                        </p>
+                    }
+
                 }
             </section>
         </div>

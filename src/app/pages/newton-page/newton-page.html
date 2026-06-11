@@ -26,22 +26,14 @@
             <div class="mt-12">
                 <p class="font-semibold underline">Parametros</p>
 
-                <div class="flex flex-col mt-5">
-                    <label>Intervalo [a,b] <span class="text-orange-500">*</span></label>
-                    <div class="flex justify-between gap-2 mt-2">
-                        <label>a =</label>
-                        <input 
-                            type="number" 
-                            [(ngModel)]="formValues.interA"
-                            placeholder="0" 
-                            class="w-25 border-gray-500 border px-2 rounded-md">
-                        <label>b =</label>
-                        <input 
-                            type="number" 
-                            [(ngModel)]="formValues.interB"
-                            placeholder="0" 
-                            class="w-25 border-gray-500 border px-2 rounded-md">
-                    </div>
+                <div class="mt-5 flex justify-between">
+                    <label>x₀ <span class="text-orange-500">*</span></label>
+
+                    <input
+                        type="number"
+                        [(ngModel)]="formValues.x0"
+                        placeholder="1"
+                        class="w-40 border-gray-500 border px-2 rounded-md">
                 </div>
 
                 <div class="mt-7 flex justify-between">
@@ -108,9 +100,7 @@
                             <app-loadindicator></app-loadindicator>
                         </div>
                     </div>
-                }
-
-                <!-- } @else {
+                } @else {
 
                     @if(resultado){
 
@@ -118,57 +108,33 @@
 
                             <table class="w-full border-collapse border border-gray-500">
                                 <thead>
-                                    <tr class="bg-orange-500/70">
+                                    <tr>
                                         <th class="border border-gray-500 p-2">Iteración</th>
-                                        <th class="border border-gray-500 p-2">a</th>
-                                        <th class="border border-gray-500 p-2">b</th>
-                                        <th class="border border-gray-500 p-2">Xm</th>
-                                        <th class="border border-gray-500 p-2">f(a)</th>
-                                        <th class="border border-gray-500 p-2">f(b)</th>
-                                        <th class="border border-gray-500 p-2">f(Xm)</th>
+                                        <th class="border border-gray-500 p-2">Xn</th>
+                                        <th class="border border-gray-500 p-2">f(Xn)</th>
+                                        <th class="border border-gray-500 p-2">f'(Xn)</th>
+                                        <th class="border border-gray-500 p-2">Xn+1</th>
                                         <th class="border border-gray-500 p-2">Error</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
 
-                                    @for(it of resultado.iteraciones; track it.iteracion){
+                                        @for(it of resultado.iteraciones; track it.iteracion){
 
-                                        <tr>
-                                            <td class="border border-gray-500 p-2 text-center">
-                                                {{ it.iteracion }}
-                                            </td>
+                                            <tr>
 
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.a }}
-                                            </td>
+                                                <td class="border border-gray-500 p-2">{{it.iteracion}}</td>
+                                                <td class="border border-gray-500 p-2">{{it.xn}}</td>
+                                                <td class="border border-gray-500 p-2">{{it.fxn}}</td>
+                                                <td class="border border-gray-500 p-2">{{it.dfxn}}</td>
+                                                <td class="border border-gray-500 p-2">{{it.xn1}}</td>
+                                                <td class="border border-gray-500 p-2">{{it.error}}</td>
 
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.b }}
-                                            </td>
+                                            </tr>
 
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.xm }}
-                                            </td>
+                                        }
 
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.fa }}
-                                            </td>
-
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.fb }}
-                                            </td>
-
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.fxm }}
-                                            </td>
-
-                                            <td class="border border-gray-500 p-2">
-                                                {{ it.error }}
-                                            </td>
-                                        </tr>
-
-                                    }
 
                                 </tbody>
                             </table>
@@ -176,7 +142,7 @@
                         </div>
 
                         <section class="mt-5">
-                            <div id="graficaBiseccion" class="w-full h-112.5"></div>
+                            <div id="graficaNewton" class="w-full h-112.5"></div>
                         </section>
 
                         <p class="pt-5 pb-5">
@@ -186,7 +152,7 @@
                         </p>
                     }
 
-                } -->
+                }
             </section>
         </div>
     </div>

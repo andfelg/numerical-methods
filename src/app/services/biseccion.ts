@@ -68,6 +68,7 @@ export class BiseccionService {
         error
       });
 
+      // condicion de parada
       if (
         Math.abs(fxm) < tolerancia ||
         error < tolerancia

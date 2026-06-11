@@ -28,10 +28,10 @@ Visualizador del comportamiento de los metodos numericos de biseccion y newton r
         ├── layouts
         │   └── app-layout --> header de navegacion
         ├── pages
-        │   ├── biseccion-page --> 
+        │   ├── biseccion-page --> diseño
         │   ├── main-page
-        │   ├── newton-page -->
-        │   └── not-found-page
+        │   ├── newton-page --> diseño
+        │   └── not-found-page --> 404
         ├── services --> logica matematica
         └── types --> configuracion de plotlyjs
 ```

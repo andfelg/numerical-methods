@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { BackButton } from '../../components/back-button/back-button';
 import { FormsModule } from '@angular/forms';
 import { Loadindicator } from '../../components/loadindicator/loadindicator';
 import { BiseccionService } from '../../services/biseccion';
 import * as Plotly from 'plotly.js-dist-min';
-import { compile } from 'mathjs';
+import { compile, i } from 'mathjs';
 
 export interface FormValues {
   func: string;
@@ -38,14 +38,19 @@ export interface BiseccionResultado {
 export class BiseccionPage {
 
   isWaiting: boolean = true;
+  isPlaying: boolean = false;
+
   private funcionCompilada: any;
+
+  // Para controlar la reproducción automática
+  private intervalId: ReturnType<typeof setInterval> | null = null;
 
   formValues: FormValues = {
     func: '',
     interA: null,
     interB: null,
-    maxIterations: null,
-    tolerance: null
+    maxIterations: 30,
+    tolerance: 0.0001
   };
   
 
@@ -54,6 +59,7 @@ export class BiseccionPage {
   iteracionActual = 0;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private biseccionService: BiseccionService
   ) {}
 
@@ -122,6 +128,7 @@ export class BiseccionPage {
 
     if (!this.resultado) return;
 
+    // Si no es la última iteración
     if (
       this.iteracionActual <
       this.resultado.iteraciones.length - 1
@@ -130,6 +137,64 @@ export class BiseccionPage {
       this.graficarIteracion();
     }
 
+  }
+
+  restart() {
+    this.iteracionActual = 0;
+    this.isPlaying = false;
+    this.graficarIteracion();
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  play() {
+
+    if (!this.resultado) return;
+
+    // Si ya se está reproduciendo, detener la reproducción
+    if (this.isPlaying) {
+
+      this.isPlaying = false;
+
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+
+      return;
+    }
+
+    // Iniciar reproducción
+    this.isPlaying = true;
+
+    this.intervalId = setInterval(() => {
+
+      if (
+        this.iteracionActual >=
+        this.resultado!.iteraciones.length - 1
+      ) {
+
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+          this.cdr.detectChanges();
+        }
+
+        this.isPlaying = false;
+        this.cdr.detectChanges();
+
+        return;
+      }
+
+      this.iteracionActual++;
+      this.graficarIteracion();
+
+      this.cdr.detectChanges();
+
+    }, 1000);
   }
 
   private evaluarFuncion(x: number): number {

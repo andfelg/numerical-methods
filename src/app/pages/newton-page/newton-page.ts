@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { compile } from 'mathjs';
 import * as Plotly from 'plotly.js-dist-min';
@@ -27,20 +27,22 @@ export interface FormValues {
 export class NewtonPage {
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private newtonService: NewtonService
   ){}
 
-  isWaiting = true;
-
+  isWaiting: boolean = true;
+  isPlaying: boolean = false;
   resultado: any = null;
 
   iteracionActual = 0;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
 
   formValues: FormValues = {
     func: '',
     x0: null,
-    maxIterations: null,
-    tolerance: null
+    maxIterations: 30,
+    tolerance: 0.0001
   };
 
   private funcionCompilada: any;
@@ -117,6 +119,64 @@ export class NewtonPage {
       this.iteracionActual--;
       this.graficarIteracion();
     }
+  }
+
+  restart() {
+    this.iteracionActual = 0;
+    this.isPlaying = false;
+    this.graficarIteracion();
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  play() {
+
+    if (!this.resultado) return;
+
+    if (this.isPlaying) {
+
+      this.isPlaying = false;
+
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+
+      return;
+    }
+
+    // Iniciar reproducción
+    this.isPlaying = true;
+
+    this.intervalId = setInterval(() => {
+
+      if (
+        this.iteracionActual >=
+        this.resultado!.iteraciones.length - 1
+      ) {
+
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+          this.cdr.detectChanges();
+        }
+
+        this.isPlaying = false;
+        this.cdr.detectChanges();
+
+        return;
+      }
+
+      this.iteracionActual++;
+
+      this.graficarIteracion();
+
+      this.cdr.detectChanges();
+
+    }, 1000);
   }
 
   limpiarFormulario() {

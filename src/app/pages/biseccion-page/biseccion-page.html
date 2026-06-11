@@ -81,21 +81,48 @@
         <!--RIGHT PANEL-->
         <div class="p-5 md:w-175 w-80 h-130 overflow-x-scroll border border-gray-500 mt-10 lg:mt-0">
             <!--TOP PROGRESS BUTTONS-->
-            <section class="sticky top-1 z-50 flex gap-2">
-                <button (click)="anterior()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M9 14l-4 -4l4 -4" />
-                        <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
-                    </svg>
-                </button>
-                <button (click)="siguiente()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M15 14l4 -4l-4 -4" />
-                        <path d="M19 10h-11a4 4 0 1 0 0 8h1" />
-                    </svg>
-                </button>
+            <section class="sticky top-1 z-50 flex justify-between">
+                <div class="flex gap-2">
+                    <button (click)="anterior()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M9 14l-4 -4l4 -4" />
+                            <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                        </svg>
+                    </button>
+                    <button (click)="play()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
+                        @if(!isPlaying){
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M7 4v16l13 -8z" />
+                            </svg>
+
+                        } @else {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-pause">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12" />
+                                <path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12" />
+                            </svg>
+                        }
+                    </button>
+                    <button (click)="siguiente()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M15 14l4 -4l-4 -4" />
+                            <path d="M19 10h-11a4 4 0 1 0 0 8h1" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <button (click)="restart()" class="w-10 h-10 bg-black flex justify-center items-center rounded-full hover:cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                            <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                        </svg>
+                    </button>
+                </div>
             </section>
 
             <section class="h-full">

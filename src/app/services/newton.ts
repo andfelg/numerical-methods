@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { compile, derivative } from 'mathjs';
 
+
+/**
+ * xn+1 = xn - f(xn) / f'(xn)
+ * Si f'(xn) es cercano a 0, el método puede divergir o no converger.
+ */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +24,7 @@ export class NewtonService {
     const f = (x: number) =>
       expr.evaluate({ x });
 
-    // derivada
+    // funcion derivada
     const df = (x: number) =>
       derivada.evaluate({ x });
 

@@ -17,6 +17,13 @@ export interface BiseccionResultado {
   iteraciones: BiseccionIteracion[];
 }
 
+/**
+ * constante = (a + b) / 2
+ * Si f(constante) es cercano a 0 o el error es menor que la tolerancia, se detiene.
+ * Si f(a) * f(constante) < 0, entonces la raíz está en el intervalo [a, constante], por lo que se asigna b = constante.
+ * Si f(b) * f(constante) < 0, entonces la raíz está en el intervalo [constante, b], por lo que se asigna a = constante.
+ */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,11 +50,7 @@ export class BiseccionService {
     let xm = 0;
     let error = Infinity;
 
-    for (
-      let i = 1;
-      i <= maxIteraciones;
-      i++
-    ) {
+    for (let i = 1; i <= maxIteraciones; i++) {
 
       xm = (a + b) / 2;
 
